@@ -1,19 +1,33 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
+const createError = require("http-errors");
+
+const indexRouter = require("./api/index");
+const postRouter = require("./api/posts");
 
 const app = express();
-const db = require("./config/database");
-
-const PORT = process.env.PORT || 3000;
-
-db.authenticate()
-  .then(() => console.log("Connected to database"))
-  .catch(err => console.log("Error while connecting to database : " + err));
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", (req, res) => res.send("/"));
+app.use("/", indexRouter);
+app.use("/posts", postRouter);
 
-app.listen(PORT, console.log(`Server started at port ${PORT}`));
+// catch 404 and forward to error handler
+app.use((req, res, next) => {
+  next(createError(404));
+});
+
+// error handler
+app.use((err, req, res, next) => {
+  // Set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get("env") === "development" ? err : {};
+
+  // return error
+  res.status(err.status || 500);
+});
+
+module.exports = app;

@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+const PostModel = require("../models/Post");
 
 const sequelize = new Sequelize("db_blog", "tio", "mysql", {
   host: "localhost",
@@ -12,4 +13,6 @@ const sequelize = new Sequelize("db_blog", "tio", "mysql", {
   }
 });
 
-module.exports = sequelize;
+const Post = PostModel(sequelize, Sequelize);
+
+module.exports = { Post };

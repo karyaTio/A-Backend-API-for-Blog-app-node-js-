@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "tio",
+    "password": "mysql",
+    "database": "db_blog",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "tio",
+    "password": "mysql",
+    "database": "db_blog",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "tio",
+    "password": "mysql",
+    "database": "db_blog",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
