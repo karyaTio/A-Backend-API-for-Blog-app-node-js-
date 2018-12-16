@@ -3,8 +3,8 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const createError = require("http-errors");
 
-const indexRouter = require("./api/index");
-const postRouter = require("./api/posts");
+const indexRouter = require("./routes/index");
+const postRouter = require("./routes/posts");
 
 const app = express();
 
