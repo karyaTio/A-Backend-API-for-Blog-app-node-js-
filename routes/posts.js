@@ -5,6 +5,8 @@ const {
   create,
   update,
   destroy,
+  comments,
+  createcomments,
   unknown,
   reject
 } = require("../controllers/PostsController");
@@ -38,6 +40,18 @@ router.post("/:id/update", update);
  * desc : Delete a post with the given id
  */
 router.post("/:id/delete", destroy);
+
+/*
+ * GET  : api/posts/:id/comments
+ * desc : Get all comment of spesific post
+ */
+router.get("/:id/comments", comments);
+
+/*
+ * POST : api/posts/:id/comments
+ * desc : Create a comment for spesific post with the given id
+ */
+router.get("/:id/comments", createcomments);
 
 /*
  * PUT  : api/posts

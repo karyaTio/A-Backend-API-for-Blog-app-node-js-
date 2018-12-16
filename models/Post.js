@@ -1,4 +1,5 @@
 "use strict";
+
 module.exports = (sequelize, DataTypes) => {
   const Post = sequelize.define(
     "Post",
@@ -7,10 +8,10 @@ module.exports = (sequelize, DataTypes) => {
       body: DataTypes.TEXT,
       category: DataTypes.STRING
     },
-    {}
+    { underscored: true }
   );
   Post.associate = function(models) {
-    // associations can be defined here
+    Post.hasMany(models.Comment);
   };
   return Post;
 };

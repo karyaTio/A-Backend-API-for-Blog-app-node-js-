@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const { Post } = require("../models");
+const { Post, Comment } = require("../models");
 
 module.exports = {
   all: (req, res) => {
@@ -25,7 +25,7 @@ module.exports = {
   find: (req, res) => {
     const { id } = req.params;
 
-    Post.findById(id)
+    Post.findById(id, { include: { model: Comment, where: { post_id: id } } })
       .then(post => {
         if (post) {
           res.status(200).json({
@@ -153,6 +153,36 @@ module.exports = {
           });
         }
       });
+  },
+  comments: (req, res) => {
+    const { id } = req.params;
+
+    Comment.findAll({ where: { post_id: id } })
+      .then(comments => {
+        res.status(200).json({
+          message: "Success getting all comment",
+          data: comments
+        });
+      })
+      .catch(err => {
+        res.status(500).json({ message: "Something went wrong" });
+      });
+  },
+  createcomments: (req, res) => {
+    // Prepare input data
+    let { id } = req.params;
+    let { body } = req.body;
+
+    Comment.create({
+      post_id: id,
+      body
+    })
+      .then(comment => {
+        res
+          .status(200)
+          .json({ message: "Success create comment", data: comment });
+      })
+      .catch(err => res.status(500).json({ message: "Something went wrong" }));
   },
   unknown: (req, res) => {
     res.status(500).json({ message: "Something went wrong" });
